@@ -24,7 +24,8 @@ from gevent.pywsgi import WSGIServer
 app = Flask(__name__)
 
 def waste_prediction(new_image):
-    model = tf.keras.saving.load_model('models/model.h5')
+    # model = tf.keras.saving.load_model('models/model.h5')
+    model = tf.keras.saving.load_model('models/v2.h5')
     test_image = image.load_img(new_image, target_size = (224,224))
     test_image = image.img_to_array(test_image) / 255
     test_image = np.expand_dims(test_image, axis=0)
@@ -43,6 +44,10 @@ def index():
     # Main page
     return render_template('index.html')
 
+@app.route('/view', methods=['GET'])
+def view():
+    # Main page
+    return render_template('preview.html')
 @app.route('/predict', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST':

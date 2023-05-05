@@ -4,29 +4,72 @@
 
 <div>
   
-    <form id="upload-file" method="post" enctype="multipart/form-data" action="/predict">
-        <label for="imageUpload" class="upload-label">
-            Choose...
-        </label>
-        <input type="file" name="file" id="imageUpload" accept=".png, .jpg, .jpeg">
-    </form>
-
-    <div class="image-section" style="display:none;">
-        <div class="img-preview">
-            <div id="imagePreview">
-            </div>
-        </div>
-        <div>
-            <button type="button" class="btn btn-primary btn-lg " id="btn-predict">Predict!</button>
-        </div>
-    </div>
-
-    <div class="loader" style="display:none;"></div>
-
-    <h3 id="result">
-    </h3>
+  
 
    
+</div>
+
+<canvas class="orb-canvas"></canvas>
+<!-- Overlay -->
+<div class="overlay">
+    <div>
+     <form id="upload-file" method="post" enctype="multipart/form-data" action="/predict" style="display:none;" >
+            <label for="imageUpload" class="upload-label">
+                Choose...
+            </label>
+            <input type="file" name="file" id="imageUpload" accept=".png, .jpg, .jpeg" >
+        </form>
+        <div class="imageHero">
+
+          <img src="/static/images/dustbin.png" alt="dustbin" style="width: 26rem;border-radius: 50px; margin:auto 0;">
+        </div>
+        
+        <div class="image-section" style="display:none;">
+          <div class="img-preview" style="max-height: 500px;">
+          
+            <img alt="Image" style="margin:auto 0; object-fit: contain;width: 416px; height: 416px;" class="imagePreview">
+                
+            </div>
+            <!-- <div>
+                <button type="button" class="btn btn-primary btn-lg " id="btn-predict">Predict!</button>
+            </div> -->
+        </div>
+        <div class="loader" style="display:none;"></div>
+      
+    </div>
+  <!-- Overlay inner wrapper -->
+  <div class="overlay__inner">
+    <!-- Title -->
+    <h1 class="overlay__title">
+     What type of Garbage is this?
+    </h1>
+    <!-- Description -->
+    <div class="overlay__description">
+        
+      <strong id="generalDesc">
+        Welcome to our garbage classifier! Our cutting-edge technology allows you to upload an image of your garbage and instantly classify it into one of several categories, including organic, recyclable, and non-recyclable. With just a few clicks, you can help reduce waste and protect the environment by properly disposing of your garbage. Our intuitive user interface makes it easy to use, and our powerful algorithms ensure accurate and reliable results every time. Try it out today and join us in the fight against waste!</strong>
+
+        <div id="result" class="scroll" style="display:none;">
+
+
+        </div>
+    </div>
+    <!-- Buttons -->
+    <div class="overlay__btns">
+
+      <button class="overlay__btn overlay__btn--transparent" id="chooseImage-btn">
+        Choose Image
+      </button>
+      <button type="button" class="overlay__btn overlay__btn--transparent" id="btn-predict">
+        Predict!
+      </button>
+      <button type="button" class="overlay__btn overlay__btn--transparent" id="btn-refresh">
+        <img src="/static/images/refresh.svg" alt="refresh" style="width: 1rem;border-radius: 50px; margin:auto 0;">&nbspRefresh!
+      </button>
+
+     
+    </div>
+  </div>
 </div>
 
 {% endblock %} 

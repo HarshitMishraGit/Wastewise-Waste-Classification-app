@@ -1,8 +1,14 @@
 $(document).ready(function () {
     // Init
     $('.image-section').hide();
+    $('#predict-btn').hide();
     $('.loader').hide();
     $('#result').hide();
+    $('#btn-predict').hide();
+    $('#chooseImage-btn').click(function () {
+        $('#imageUpload').click();
+    }
+    );
     const preDefinedData = [
         {
             type:"Batteries",
@@ -54,9 +60,10 @@ $(document).ready(function () {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
-                $('#imagePreview').hide();
-                $('#imagePreview').fadeIn(650);
+                // $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                // $('#imagePreview').hide();
+                // $('#imagePreview').fadeIn(650);
+                $('.imagePreview').attr('src', e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
         }
@@ -66,6 +73,9 @@ $(document).ready(function () {
         $('#btn-predict').show();
         $('#result').text('');
         $('#result').hide();
+        $('#upload-file').hide();
+        $('.imageHero').hide();
+        $('#predict-btn').show();
         readURL(this);
     });
 
@@ -93,7 +103,13 @@ $(document).ready(function () {
                 // $('#result').text(' Result:  ' + JSON.stringify(data));
                 preDefinedData.map((item) => {
                     if (item.type.toLowerCase() === data.waste_type.toLowerCase()) {
-                        $('#result').html('<h3>Result: ' + item.type + '</h3><br><p>' + item.description + '</p>');
+                        $('.overlay__title').html("Garbage Type: " +item.type);
+                        $('#result').html('<small id="small">' + item.description + '</small>');
+                        $('#generalDesc').hide();
+                        $('#chooseImage-btn').hide();
+
+                        $('#result').show();
+                        
                     }
                 })
                 console.log('Success!');
