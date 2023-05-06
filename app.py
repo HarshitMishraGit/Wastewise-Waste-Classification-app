@@ -28,9 +28,9 @@ app = Flask(__name__)
 def waste_prediction(new_image):
     # Disable scientific notation for clarity
     np.set_printoptions(suppress=True)
-    model = tf.keras.saving.load_model('models/v2.h5',compile=False)
+    model = tf.keras.saving.load_model('models/v4/v4.h5',compile=False)
     # Load the labels
-    class_names = open("labels.txt", "r").readlines()
+    class_names = open("models/v4/labels.txt", "r").readlines()
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
     image = Image.open(new_image).convert("RGB")
     size = (224, 224)

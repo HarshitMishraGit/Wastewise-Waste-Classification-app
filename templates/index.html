@@ -1,17 +1,18 @@
 {% extends "base.html" %} {% block content %}
 
-<h2>Image Classifier</h2>
 
-<div>
+<div class="hero-bar">
+  <img src="/static/images/logo.png" alt="" style="width: 5rem;height:5rem; border-radius: 100%;">
+  <h2 class="auto-input" id="mainTitle"></h2>
   
+</div>
   
 
    
-</div>
 
-<canvas class="orb-canvas"></canvas>
+<canvas class="orb-canvas "></canvas>
 <!-- Overlay -->
-<div class="overlay">
+<div class="overlay container">
     <div>
      <form id="upload-file" method="post" enctype="multipart/form-data" action="/predict" style="display:none;" >
             <label for="imageUpload" class="upload-label">
@@ -36,9 +37,7 @@
             overflow: hidden;" class="imagePreview">
                 
             </div>
-            <!-- <div>
-                <button type="button" class="btn btn-primary btn-lg " id="btn-predict">Predict!</button>
-            </div> -->
+
         </div>
         <div class="loader" >
 
@@ -80,5 +79,7 @@
     </div>
   </div>
 </div>
-
+<button type="button" class="btn btn-primary d-none"  data-bs-toggle="modal" id="modalButtonPress" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button>
+{% include 'crousel.html' %}
+{% include 'modal.html' %}
 {% endblock %} 
