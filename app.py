@@ -9,10 +9,12 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import random
 import string
+from PIL import Image, ImageOps  # Install pillow instead of PIL
+
 # Keras
 from keras.applications.imagenet_utils import preprocess_input, decode_predictions
 # from keras.preprocessing import image
-from tensorflow.keras.preprocessing import image
+# from tensorflow.keras.preprocessing import image
 output_class = ["batteries", "clothes", "e-waste", "glass", "light bulbs", "metal", "organic", "paper", "plastic"]
 
 
@@ -24,16 +26,36 @@ from gevent.pywsgi import WSGIServer
 app = Flask(__name__)
 
 def waste_prediction(new_image):
-    # model = tf.keras.saving.load_model('models/model.h5')
-    model = tf.keras.saving.load_model('models/v2.h5')
-    test_image = image.load_img(new_image, target_size = (224,224))
-    test_image = image.img_to_array(test_image) / 255
-    test_image = np.expand_dims(test_image, axis=0)
+    # Disable scientific notation for clarity
+    np.set_printoptions(suppress=True)
+    model = tf.keras.saving.load_model('models/v2.h5',compile=False)
+    # Load the labels
+    class_names = open("labels.txt", "r").readlines()
+    data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+    image = Image.open(new_image).convert("RGB")
+    size = (224, 224)
+    image = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
+    # turn the image into a numpy array
+    image_array = np.asarray(image)
+    # Normalize the image
+    normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
+    # Load the image into the array
+    data[0] = normalized_image_array
+    # Predicts the model
+    prediction = model.predict(data)
+    index = np.argmax(prediction)
+    class_name = class_names[index]
+    confidence_score = prediction[0][index]
+    # Print prediction and confidence score 
+    print("Confidence Score:", confidence_score)
+    print("class:", class_name[2:])
+    # return class_name[2:], confidence_score
+    t = str(class_name[2:]).split('\n')[0]
+    c = float(confidence_score)
+    return t,c
+    
 
-    predicted_array = model.predict(test_image)
-    predicted_value = output_class[np.argmax(predicted_array)]
-    predicted_accuracy = round(np.max(predicted_array) * 100, 2)
-    return predicted_value,predicted_accuracy
+
 
 def generate_random_string():
     # generate a random string of length 10
@@ -65,6 +87,8 @@ def upload():
         # print(type(result))
         # model_predict(file_path,model)
         typ,conf = waste_prediction(new_path)
+        # delete the file
+        os.remove(new_path)
         response = {'waste_type': typ, 'accuracy': conf}
         return response
     return None

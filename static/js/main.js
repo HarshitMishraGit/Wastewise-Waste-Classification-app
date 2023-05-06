@@ -5,6 +5,9 @@ $(document).ready(function () {
     $('.loader').hide();
     $('#result').hide();
     $('#btn-predict').hide();
+    $('#btn-refresh').click(function () {
+        window.location.reload();
+    });
     $('#chooseImage-btn').click(function () {
         $('#imageUpload').click();
     }
@@ -74,6 +77,7 @@ $(document).ready(function () {
         $('#result').text('');
         $('#result').hide();
         $('#upload-file').hide();
+        $('#chooseImage-btn').hide();
         $('.imageHero').hide();
         $('#predict-btn').show();
         readURL(this);
@@ -112,7 +116,7 @@ $(document).ready(function () {
                         
                     }
                 })
-                console.log('Success!');
+                console.log('Success!',data);
             },
         });
     });
