@@ -10,18 +10,18 @@ import matplotlib.pyplot as plt
 import random
 import string
 from PIL import Image, ImageOps  # Install pillow instead of PIL
-
 # Keras
 from keras.applications.imagenet_utils import preprocess_input, decode_predictions
+from flask import Flask, redirect, url_for, request, render_template
+from werkzeug.utils import secure_filename
+from gevent.pywsgi import WSGIServer
+
 # from keras.preprocessing import image
 # from tensorflow.keras.preprocessing import image
 output_class = ["batteries", "clothes", "e-waste", "glass", "light bulbs", "metal", "organic", "paper", "plastic"]
 
 
 # Flask utils
-from flask import Flask, redirect, url_for, request, render_template
-from werkzeug.utils import secure_filename
-from gevent.pywsgi import WSGIServer
 # Define a flask app
 app = Flask(__name__)
 
