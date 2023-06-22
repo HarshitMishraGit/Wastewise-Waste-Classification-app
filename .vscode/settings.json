@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/22245b75-5a55-4ed1-be55-7fff7de67b7f/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/waste-wise",
+    "appService.deploySubpath": "."
+}
